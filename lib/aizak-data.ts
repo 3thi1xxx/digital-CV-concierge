@@ -727,7 +727,7 @@ export const aizakData = {
 
   chatbot_context: {
     summary:
-      "This chatbot is powered by a structured dataset derived from Aizak’s projects, working history, interview answers, and ongoing development logs.",
+      "This system was built using AI as a high-leverage execution tool, with Aizak acting as the architect, validator, and final decision-maker. All outputs were reviewed, tested, and grounded in real system behavior.",
 
     expanded:
       "The information comes from a combination of documented system work, structured notes, project artifacts, and an AI-assisted workflow where context is preserved and revisited across sessions. This allows the chatbot to reflect a consistent and up-to-date representation of Aizak’s work rather than a static CV.",
