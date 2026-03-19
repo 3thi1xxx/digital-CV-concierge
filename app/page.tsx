@@ -725,7 +725,24 @@ export default function AgenticCV() {
 
   const handleAuthenticate = (code: string) => {
     const normalizedCode = code.trim().toUpperCase();
-    if (/^EVAL-\d+$/.test(normalizedCode)) {
+    
+    // Special admin code for unlimited use
+    if (normalizedCode === 'ADMINETHIXX') {
+      setCurrentAccessCode('ADMIN');
+      setAccessCodeInput('');
+      setAuthError('');
+      
+      const now = Date.now();
+      setSessionStartedAt(now);
+      sessionStorage.setItem("aizak_session_started_at", String(now));
+      setSessionExpired(false);
+      setShowExpiryWarning(false);
+      
+      addLog(`Admin session activated.`, 'success');
+      return;
+    }
+
+    if (/^EVAL-0[1-3]$/.test(normalizedCode)) {
       if (usedCodes.includes(normalizedCode)) {
         setAuthError('This access code has already been used.');
         return;
@@ -749,7 +766,7 @@ export default function AgenticCV() {
         addLog(`Session authenticated using code: ${normalizedCode}`, 'success');
       }
     } else {
-      setAuthError('Invalid access code. Please use format EVAL-XX.');
+      setAuthError('Invalid access code. Please use EVAL-01, EVAL-02, or EVAL-03.');
     }
   };
 
@@ -867,7 +884,7 @@ export default function AgenticCV() {
                     type="text"
                     value={accessCodeInput}
                     onChange={(e) => { setAccessCodeInput(e.target.value); setAuthError(''); }}
-                    placeholder="Enter access code to continue (e.g., EVAL-01)"
+                    placeholder="Enter access code (EVAL-01 to 03)"
                     className="w-full bg-[#0B0D10] border border-[#1E232A] rounded-md px-3 py-2 text-sm text-[#E6EAF0] placeholder-[#98A2B3]/50 focus:outline-none focus:border-[#3B82F6] focus:ring-1 focus:ring-[#3B82F6] transition-all font-mono"
                   />
                   {authError && <p className="text-xs text-[#EF4444] mt-1">{authError}</p>}
